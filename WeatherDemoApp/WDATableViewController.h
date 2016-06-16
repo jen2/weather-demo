@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  WDATableViewController.h
 //  WeatherDemoApp
 //
 //  Created by Jennifer A Sipila on 6/15/16.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface WDATableViewController : UITableViewController
 
 @end
-
