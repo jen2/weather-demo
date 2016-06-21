@@ -23,7 +23,7 @@
 
 @end
 
-// TO DO: Get users location, Make a down arrow to show users to scroll, Get decimal places out of all label Strings, Get date label working, get forecast for all 7 days, get refresh button working.
+// TO DO: Get users location, Make a down arrow to show users to scroll, get refresh button working.
 
 @implementation WDATableViewController
 
@@ -37,7 +37,6 @@
                                                   forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
-    
 }
 
 -(void) getCurrentConditions
@@ -51,11 +50,10 @@
     }];
 }
 
-- (NSString *) getPercentage:(NSString *)string
+- (NSString *) getPercentage:(NSString *)decimalString
 {
-    NSNumber *floatValueFromString = @([string floatValue] * 100);
-    NSUInteger numValue = (NSInteger) (floatValueFromString);
-    return [NSString stringWithFormat:@"%lu", (unsigned long)numValue];
+    NSString *percentage = [decimalString substringFromIndex:2];
+    return percentage;
 }
 
 -(NSString *) getIntegerString: (NSString *)string
@@ -83,24 +81,25 @@
     
     NSArray *data = self.forecastData[indexPath.row];
     
+    NSNumber *precipNum = [data valueForKeyPath:@"precipProbability"];
+    NSNumber *humidityNum = [data valueForKeyPath:@"humidity"];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterPercentStyle];
+    [numberFormatter setMinimumFractionDigits:1];
+    NSString *precipPercentage = [numberFormatter stringFromNumber:precipNum];
+    NSString *humidityPercentage = [numberFormatter stringFromNumber:humidityNum];
     NSString *temperatureString = [self getIntegerString:[data valueForKeyPath:@"temperatureMax"]];
     NSString *windString = [self getIntegerString:[data valueForKeyPath:@"windSpeed"]];
-    NSString *precipString = [self getPercentage:[data valueForKeyPath:@"precipProbability"]];
-    NSString *humiditypString = [self getPercentage:[data valueForKeyPath:@"humidity"]];
-    
+
+    cell.precipitationLabel.text = precipPercentage;
+    cell.humidityLabel.text = humidityPercentage;
     cell.temperatureLabel.text = [NSString stringWithFormat: @"%@°", temperatureString];
-    cell.precipitationLabel.text = [NSString stringWithFormat: @"%@%%", precipString];
-    cell.humidityLabel.text = [NSString stringWithFormat: @"%@%%", humiditypString];
     cell.windSpeedLabel.text = [NSString stringWithFormat:@"%@ mph", windString];
-    
-    
-    
-    
-//    cell.temperatureLabel.text = [NSString stringWithFormat: @"%@%%", [data valueForKeyPath:@"temperatureMax"]];
-//    cell.precipitationLabel.text = [NSString stringWithFormat: @"%@%%", [data valueForKeyPath:@"precipProbability"]];
-//    cell.humidityLabel.text = [NSString stringWithFormat: @"%@%%", [data valueForKeyPath:@"humidity"]];
-//    cell.windSpeedLabel.text = [NSString stringWithFormat:@"%@ mph", [data valueForKeyPath:@"widnSpeed"]];
     cell.backgroundColor = [UIColor clearColor];
+
+    NSArray * allDatesOfThisWeek = [self getWeekDates];
+    cell.dateLabel.text = allDatesOfThisWeek[indexPath.row];
+
 
     return cell;
 }
@@ -109,6 +108,40 @@
 {
     return [UIScreen mainScreen].bounds.size.height;
 }
+
+-(NSArray *) getWeekDates
+{
+    NSMutableArray *weekDates = [[NSMutableArray alloc] init];
+    NSDate *now = [NSDate date];
+    for(NSUInteger i = 0; i < 7; i++) {
+        if (i == 0) {
+            
+            NSString *formattedDate = [self formatDate: now];
+            [weekDates addObject:formattedDate];
+            
+        } else {
+    
+            NSTimeInterval secondsInDay = 24 * 60 * 60;
+            NSDate *nextDay = [NSDate dateWithTimeInterval:secondsInDay
+                                                 sinceDate:now];
+            NSString *formattedDate = [self formatDate: nextDay];
+            [weekDates addObject:formattedDate];
+            
+        }
+    }
+    return weekDates;
+}
+
+- (NSString *) formatDate:(NSDate *) date
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"EEEE MMMM d y"];
+    NSString *formattedDate = [formatter stringFromDate:date];
+    NSLog(@"%@", formattedDate);
+    
+    return formattedDate;
+}
+
 
 
 /*

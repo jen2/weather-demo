@@ -10,6 +10,7 @@
 
 @interface WDATableViewCustomCell : UITableViewCell
 
+@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *temperatureLabel;
 @property (strong, nonatomic) IBOutlet UILabel *precipitationLabel;
 @property (strong, nonatomic) IBOutlet UILabel *humidityLabel;
