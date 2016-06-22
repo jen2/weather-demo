@@ -90,8 +90,16 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downArrow" translatesAutoresizingMaskIntoConstraints="NO" id="m3o-hM-eQm">
+                                            <rect key="frame" x="163" y="544" width="50" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="VrV-FZ-xU5"/>
+                                                <constraint firstAttribute="width" constant="50" id="k0w-K6-dIe"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="m3o-hM-eQm" firstAttribute="centerX" secondItem="Byk-s2-1Ag" secondAttribute="centerX" id="0Kq-FH-G7F"/>
                                         <constraint firstItem="kK7-nh-KiV" firstAttribute="top" secondItem="ITU-Ib-JEd" secondAttribute="bottom" id="9Fm-zq-DWg"/>
                                         <constraint firstItem="NIY-MD-tRQ" firstAttribute="centerY" secondItem="msR-5D-QUZ" secondAttribute="centerY" id="Ga2-p9-Nb6"/>
                                         <constraint firstItem="ITU-Ib-JEd" firstAttribute="centerY" secondItem="msR-5D-QUZ" secondAttribute="centerY" id="HQv-ZR-8bL"/>
@@ -101,6 +109,7 @@
                                         <constraint firstItem="f13-HX-ziF" firstAttribute="centerY" secondItem="Byk-s2-1Ag" secondAttribute="centerY" multiplier="0.6" id="Om2-Mr-7nr"/>
                                         <constraint firstItem="f13-HX-ziF" firstAttribute="centerX" secondItem="Byk-s2-1Ag" secondAttribute="centerX" multiplier="1.1" id="Q6I-Oq-HBO"/>
                                         <constraint firstItem="kK7-nh-KiV" firstAttribute="centerX" secondItem="ITU-Ib-JEd" secondAttribute="centerX" id="S20-VV-cBn"/>
+                                        <constraint firstItem="m3o-hM-eQm" firstAttribute="centerY" secondItem="Byk-s2-1Ag" secondAttribute="centerY" multiplier="1.75" id="TaJ-zo-9yr"/>
                                         <constraint firstItem="v3c-w4-QTX" firstAttribute="top" secondItem="NIY-MD-tRQ" secondAttribute="bottom" constant="30" id="UHF-yJ-bTF"/>
                                         <constraint firstItem="msR-5D-QUZ" firstAttribute="centerX" secondItem="Byk-s2-1Ag" secondAttribute="centerX" multiplier="0.5" id="Z0q-p4-Qpn"/>
                                         <constraint firstItem="lOO-Pr-V9c" firstAttribute="centerX" secondItem="msR-5D-QUZ" secondAttribute="centerX" id="aSY-GX-HmM"/>
@@ -118,6 +127,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="dateLabel" destination="mce-eI-y8N" id="G9z-D0-R9x"/>
+                                    <outlet property="downArrow" destination="m3o-hM-eQm" id="M5h-pm-lLN"/>
                                     <outlet property="humidityLabel" destination="GYZ-W7-iRv" id="iSM-eh-mOG"/>
                                     <outlet property="precipitationLabel" destination="lOO-Pr-V9c" id="sTV-Y0-ECQ"/>
                                     <outlet property="temperatureLabel" destination="f13-HX-ziF" id="19U-ZL-R3u"/>
@@ -130,7 +140,13 @@
                             <outlet property="delegate" destination="ycs-pI-NyF" id="Daq-d3-IPW"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="7Ya-5B-dre"/>
+                    <navigationItem key="navigationItem" id="7Ya-5B-dre">
+                        <barButtonItem key="rightBarButtonItem" title="Refresh" id="4Qa-Z5-XZf">
+                            <connections>
+                                <action selector="refreshTableView:" destination="ycs-pI-NyF" id="qHb-5T-UyX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gey-Ex-wVI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -161,5 +177,6 @@
         <image name="Frog" width="591" height="458"/>
         <image name="Rain" width="524" height="557"/>
         <image name="Wind" width="441" height="337"/>
+        <image name="downArrow" width="270" height="156"/>
     </resources>
 </document>

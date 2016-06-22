@@ -15,5 +15,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *precipitationLabel;
 @property (strong, nonatomic) IBOutlet UILabel *humidityLabel;
 @property (strong, nonatomic) IBOutlet UILabel *windSpeedLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *downArrow;
 
 @end

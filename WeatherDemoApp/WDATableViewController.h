@@ -10,5 +10,4 @@
 
 @interface WDATableViewController : UITableViewController
 
-
 @end

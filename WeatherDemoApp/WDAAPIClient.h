@@ -11,8 +11,6 @@
 
 @interface WDAAPIClient : NSObject
 
-//+ (void) getCurrentForecastWithLatitude:(CGFloat)latitude Longitude:(CGFloat)longitude Completion: (void (^)(NSArray *forecastData))completionBlock;
-
 + (void) getDailyForecastWithLatitude:(CGFloat)latitude Longitude:(CGFloat)longitude Completion: (void (^)(NSArray *forecastData))completionBlock;
 
 @end

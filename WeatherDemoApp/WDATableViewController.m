@@ -21,9 +21,11 @@
 @property (nonatomic, strong) NSMutableArray *forecastedPrecipProbabilities;
 @property (nonatomic, strong) NSMutableArray *forecastedHumidities;
 
+@property (nonatomic, strong) NSArray *allDatesOfThisWeek;
+
 @end
 
-// TO DO: Get users location, Make a down arrow to show users to scroll, get refresh button working.
+// TO DO: Get users location,  get refresh button working.
 
 @implementation WDATableViewController
 
@@ -37,6 +39,13 @@
                                                   forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
+    self.allDatesOfThisWeek = [self getWeekDates];
+    self.tableView.allowsSelection = NO;
+    
+}
+- (IBAction)refreshTableView:(UIBarButtonItem *)sender
+{
+    [self getCurrentConditions];
 }
 
 -(void) getCurrentConditions
@@ -81,6 +90,12 @@
     
     NSArray *data = self.forecastData[indexPath.row];
     
+    if (indexPath.row == 0) {
+        cell.downArrow.hidden = NO;
+    } else {
+        cell.downArrow.hidden = YES;
+    }
+    
     NSNumber *precipNum = [data valueForKeyPath:@"precipProbability"];
     NSNumber *humidityNum = [data valueForKeyPath:@"humidity"];
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
@@ -96,10 +111,7 @@
     cell.temperatureLabel.text = [NSString stringWithFormat: @"%@°", temperatureString];
     cell.windSpeedLabel.text = [NSString stringWithFormat:@"%@ mph", windString];
     cell.backgroundColor = [UIColor clearColor];
-
-    NSArray * allDatesOfThisWeek = [self getWeekDates];
-    cell.dateLabel.text = allDatesOfThisWeek[indexPath.row];
-
+    cell.dateLabel.text = self.allDatesOfThisWeek[indexPath.row];
 
     return cell;
 }
@@ -109,83 +121,36 @@
     return [UIScreen mainScreen].bounds.size.height;
 }
 
--(NSArray *) getWeekDates
-{
-    NSMutableArray *weekDates = [[NSMutableArray alloc] init];
-    NSDate *now = [NSDate date];
-    for(NSUInteger i = 0; i < 7; i++) {
-        if (i == 0) {
-            
-            NSString *formattedDate = [self formatDate: now];
-            [weekDates addObject:formattedDate];
-            
-        } else {
-    
-            NSTimeInterval secondsInDay = 24 * 60 * 60;
-            NSDate *nextDay = [NSDate dateWithTimeInterval:secondsInDay
-                                                 sinceDate:now];
-            NSString *formattedDate = [self formatDate: nextDay];
-            [weekDates addObject:formattedDate];
-            
-        }
-    }
-    return weekDates;
-}
-
 - (NSString *) formatDate:(NSDate *) date
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"EEEE MMMM d y"];
     NSString *formattedDate = [formatter stringFromDate:date];
     NSLog(@"%@", formattedDate);
-    
     return formattedDate;
 }
 
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(NSArray *) getWeekDates
+{
+    NSMutableArray *weekDates = [[NSMutableArray alloc] init];
+    NSDate *now = [NSDate date];
+    NSDate *previousDay = now;
+    for(NSUInteger i = 0; i <= 7; i++) {
+        if (i == 0) {
+            
+            NSString *formattedDate = [self formatDate: now];
+            [weekDates addObject:formattedDate];
+            
+        } else {
+            NSTimeInterval secondsInDay = 24 * 60 * 60;
+            NSDate *nextDay = [NSDate dateWithTimeInterval:secondsInDay
+                                                 sinceDate:previousDay];
+            NSString *formattedDate = [self formatDate: nextDay];
+            [weekDates addObject:formattedDate];
+            previousDay = nextDay;
+        }
+    }
+    return weekDates;
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
