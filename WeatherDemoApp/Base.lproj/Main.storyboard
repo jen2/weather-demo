@@ -67,7 +67,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mce-eI-y8N" userLabel="Date Label">
-                                            <rect key="frame" x="167" y="21" width="42" height="21"/>
+                                            <rect key="frame" x="167" y="53" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -104,7 +104,7 @@
                                         <constraint firstItem="NIY-MD-tRQ" firstAttribute="centerY" secondItem="msR-5D-QUZ" secondAttribute="centerY" id="Ga2-p9-Nb6"/>
                                         <constraint firstItem="ITU-Ib-JEd" firstAttribute="centerY" secondItem="msR-5D-QUZ" secondAttribute="centerY" id="HQv-ZR-8bL"/>
                                         <constraint firstItem="v3c-w4-QTX" firstAttribute="centerX" secondItem="NIY-MD-tRQ" secondAttribute="centerX" id="Ioj-ew-lK4"/>
-                                        <constraint firstItem="mce-eI-y8N" firstAttribute="centerY" secondItem="Byk-s2-1Ag" secondAttribute="centerY" multiplier="0.1" id="Jtq-qG-7NW"/>
+                                        <constraint firstItem="mce-eI-y8N" firstAttribute="centerY" secondItem="Byk-s2-1Ag" secondAttribute="centerY" multiplier="0.2" id="Jtq-qG-7NW"/>
                                         <constraint firstItem="H8N-gW-8MX" firstAttribute="centerX" secondItem="msR-5D-QUZ" secondAttribute="centerX" id="OHC-sg-rcC"/>
                                         <constraint firstItem="f13-HX-ziF" firstAttribute="centerY" secondItem="Byk-s2-1Ag" secondAttribute="centerY" multiplier="0.6" id="Om2-Mr-7nr"/>
                                         <constraint firstItem="f13-HX-ziF" firstAttribute="centerX" secondItem="Byk-s2-1Ag" secondAttribute="centerX" multiplier="1.1" id="Q6I-Oq-HBO"/>
@@ -140,13 +140,21 @@
                             <outlet property="delegate" destination="ycs-pI-NyF" id="Daq-d3-IPW"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="7Ya-5B-dre">
-                        <barButtonItem key="rightBarButtonItem" title="Refresh" id="4Qa-Z5-XZf">
-                            <connections>
-                                <action selector="refreshTableView:" destination="ycs-pI-NyF" id="qHb-5T-UyX"/>
-                            </connections>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Kdy-ns-49I">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JAM-Fg-2Od">
+                                <rect key="frame" x="329" y="7" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Button" image="refresh"/>
+                                <connections>
+                                    <action selector="refreshTable:" destination="ycs-pI-NyF" eventType="touchUpInside" id="yHz-FL-tb8"/>
+                                </connections>
+                            </button>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gey-Ex-wVI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -178,5 +186,6 @@
         <image name="Rain" width="524" height="557"/>
         <image name="Wind" width="441" height="337"/>
         <image name="downArrow" width="270" height="156"/>
+        <image name="refresh" width="581" height="596"/>
     </resources>
 </document>

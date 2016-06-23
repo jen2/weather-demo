@@ -20,18 +20,19 @@
 @property (nonatomic, strong) NSMutableArray *forecastedWindSpeeds;
 @property (nonatomic, strong) NSMutableArray *forecastedPrecipProbabilities;
 @property (nonatomic, strong) NSMutableArray *forecastedHumidities;
-
 @property (nonatomic, strong) NSArray *allDatesOfThisWeek;
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
-// TO DO: Get users location,  get refresh button working.
 
 @implementation WDATableViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self getLocation];
     [self getCurrentConditions];
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"WDABackground.v1-1.jpg"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -41,17 +42,16 @@
     self.navigationController.navigationBar.translucent = YES;
     self.allDatesOfThisWeek = [self getWeekDates];
     self.tableView.allowsSelection = NO;
-    
 }
-- (IBAction)refreshTableView:(UIBarButtonItem *)sender
+- (IBAction)refreshTable:(UIButton *)sender
 {
     [self getCurrentConditions];
 }
 
 -(void) getCurrentConditions
 {
-    self.latitude = 40.8073550;
-    self.longitude = -73.9428640;
+    self.latitude = 43.000;
+    self.longitude = -85.0000;
     
     [WDAAPIClient getDailyForecastWithLatitude:(CGFloat)self.latitude Longitude:(CGFloat)self.longitude Completion: ^(NSArray *forecastData) {
         self.forecastData = forecastData;
@@ -92,7 +92,17 @@
     
     if (indexPath.row == 0) {
         cell.downArrow.hidden = NO;
+
+        
+//        [UIView animateWithDuration: 5 delay:0 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{
+//            cell.downArrow.hidden = YES;
+//            [self.view layoutIfNeeded];
+//        } completion:^(BOOL finished) {
+//            cell.downArrow.hidden = NO;
+//        }];
+
     } else {
+        
         cell.downArrow.hidden = YES;
     }
     
@@ -152,5 +162,36 @@
     }
     return weekDates;
 }
+
+//Gets device location
+- (void)getLocation
+{
+    if ([CLLocationManager locationServicesEnabled]) {
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.delegate = self;
+        
+        if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            [self.locationManager requestWhenInUseAuthorization];
+        }
+        
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.locationManager.distanceFilter = 500;
+        
+        [self.locationManager startUpdatingLocation];
+        
+    } else {
+        NSLog(@"Location services are not enabled");
+    }
+}
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    self.latitude = self.locationManager.location.coordinate.latitude;
+    self.longitude = self.locationManager.location.coordinate.longitude;
+    
+    [self.locationManager stopUpdatingLocation];
+    self.locationManager = nil;
+}
+
 
 @end

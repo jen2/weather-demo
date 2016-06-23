@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface WDATableViewController : UITableViewController
+
+@interface WDATableViewController : UITableViewController <CLLocationManagerDelegate>
 
 @end
