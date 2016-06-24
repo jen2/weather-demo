@@ -14,14 +14,12 @@
 
 @property (nonatomic) CGFloat latitude;
 @property (nonatomic) CGFloat longitude;
-
 @property (nonatomic, strong) NSArray *forecastData;
 @property (nonatomic, strong) NSMutableArray *forecastedTemperatures;
 @property (nonatomic, strong) NSMutableArray *forecastedWindSpeeds;
 @property (nonatomic, strong) NSMutableArray *forecastedPrecipProbabilities;
 @property (nonatomic, strong) NSMutableArray *forecastedHumidities;
 @property (nonatomic, strong) NSArray *allDatesOfThisWeek;
-
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
@@ -43,6 +41,7 @@
     self.allDatesOfThisWeek = [self getWeekDates];
     self.tableView.allowsSelection = NO;
 }
+
 - (IBAction)refreshTable:(UIButton *)sender
 {
     [self getCurrentConditions];
@@ -59,20 +58,7 @@
     }];
 }
 
-- (NSString *) getPercentage:(NSString *)decimalString
-{
-    NSString *percentage = [decimalString substringFromIndex:2];
-    return percentage;
-}
-
--(NSString *) getIntegerString: (NSString *)string
-{
-    CGFloat floatValueFromString = [string floatValue];
-    NSUInteger integerValue = (NSInteger) (floatValueFromString);
-    return [NSString stringWithFormat:@"%lu", integerValue];
-}
-
-#pragma mark - Table view data source
+#pragma mark - Table view delegate methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -90,22 +76,6 @@
     
     NSArray *data = self.forecastData[indexPath.row];
     
-    if (indexPath.row == 0) {
-        cell.downArrow.hidden = NO;
-
-        
-//        [UIView animateWithDuration: 5 delay:0 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{
-//            cell.downArrow.hidden = YES;
-//            [self.view layoutIfNeeded];
-//        } completion:^(BOOL finished) {
-//            cell.downArrow.hidden = NO;
-//        }];
-
-    } else {
-        
-        cell.downArrow.hidden = YES;
-    }
-    
     NSNumber *precipNum = [data valueForKeyPath:@"precipProbability"];
     NSNumber *humidityNum = [data valueForKeyPath:@"humidity"];
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
@@ -122,6 +92,14 @@
     cell.windSpeedLabel.text = [NSString stringWithFormat:@"%@ mph", windString];
     cell.backgroundColor = [UIColor clearColor];
     cell.dateLabel.text = self.allDatesOfThisWeek[indexPath.row];
+    
+    if (indexPath.row == 0) {
+        cell.downArrow.hidden = NO;
+        
+    } else {
+        
+        cell.downArrow.hidden = YES;
+    }
 
     return cell;
 }
@@ -130,6 +108,23 @@
 {
     return [UIScreen mainScreen].bounds.size.height;
 }
+
+#pragma mark - Calculations for labels
+
+- (NSString *) getPercentage:(NSString *)decimalString
+{
+    NSString *percentage = [decimalString substringFromIndex:2];
+    return percentage;
+}
+
+-(NSString *) getIntegerString: (NSString *)string
+{
+    CGFloat floatValueFromString = [string floatValue];
+    NSUInteger integerValue = (NSInteger) (floatValueFromString);
+    return [NSString stringWithFormat:@"%lu", integerValue];
+}
+
+#pragma mark - Date formatting methods
 
 - (NSString *) formatDate:(NSDate *) date
 {
@@ -163,7 +158,8 @@
     return weekDates;
 }
 
-//Gets device location
+#pragma mark - Location service methods
+
 - (void)getLocation
 {
     if ([CLLocationManager locationServicesEnabled]) {
@@ -180,7 +176,7 @@
         [self.locationManager startUpdatingLocation];
         
     } else {
-        NSLog(@"Location services are not enabled");
+        [self alertForLocationServices];
     }
 }
 
@@ -193,5 +189,18 @@
     self.locationManager = nil;
 }
 
+- (void) alertForLocationServices
+{
+    UIAlertController* locationServicesAlert = [UIAlertController alertControllerWithTitle:@"Location Services Error"
+                                                                           message:@"Please enable location services and try again"
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              [self dismissViewControllerAnimated:YES completion:nil];
+                                                          }];
+    [locationServicesAlert addAction:defaultAction];
+    [self presentViewController:locationServicesAlert animated:YES completion:nil];
+}
 
 @end
