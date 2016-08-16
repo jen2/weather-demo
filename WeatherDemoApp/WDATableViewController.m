@@ -32,7 +32,7 @@
     [super viewDidLoad];
     [self getLocation];
     [self getCurrentConditions];
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"WDABackground.v1-1.jpg"]];
+    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"WeatherApp-background-1.jpg"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                   forBarMetrics:UIBarMetricsDefault];
