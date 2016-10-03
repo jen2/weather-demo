@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3ED2DB6A61BFCAA524EAC8CF /* libPods-WeatherDemoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E707209758320E9F6D0BC985 /* libPods-WeatherDemoApp.a */; };
+		4B546A4C1D9B0D080052A2C4 /* WDATMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B546A4B1D9B0D070052A2C4 /* WDATMainViewController.m */; };
 		4B78DAB51D11D4C500705CB6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B78DAB41D11D4C500705CB6 /* main.m */; };
 		4B78DAB81D11D4C500705CB6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B78DAB71D11D4C500705CB6 /* AppDelegate.m */; };
 		4B78DABE1D11D4C500705CB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B78DABC1D11D4C500705CB6 /* Main.storyboard */; };
@@ -21,6 +22,8 @@
 /* Begin PBXFileReference section */
 		103AB573CC01FC5D69D061BD /* Pods-WeatherDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherDemoApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherDemoApp/Pods-WeatherDemoApp.release.xcconfig"; sourceTree = "<group>"; };
 		15E4B2B828C3C02608EDE4C3 /* Pods-WeatherDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherDemoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherDemoApp/Pods-WeatherDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		4B546A4A1D9B0D070052A2C4 /* WDATMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WDATMainViewController.h; sourceTree = "<group>"; };
+		4B546A4B1D9B0D070052A2C4 /* WDATMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WDATMainViewController.m; sourceTree = "<group>"; };
 		4B78DAB01D11D4C500705CB6 /* WeatherDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B78DAB41D11D4C500705CB6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B78DAB61D11D4C500705CB6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -107,6 +110,8 @@
 			children = (
 				4B78DACA1D11D52C00705CB6 /* WDATableViewController.h */,
 				4B78DACB1D11D52C00705CB6 /* WDATableViewController.m */,
+				4B546A4A1D9B0D070052A2C4 /* WDATMainViewController.h */,
+				4B546A4B1D9B0D070052A2C4 /* WDATMainViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -259,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B78DAB81D11D4C500705CB6 /* AppDelegate.m in Sources */,
+				4B546A4C1D9B0D080052A2C4 /* WDATMainViewController.m in Sources */,
 				4B78DAD01D12C96A00705CB6 /* WDATableViewCustomCell.m in Sources */,
 				4B78DAD31D12CCDB00705CB6 /* WDAAPIClient.m in Sources */,
 				4B78DACC1D11D52C00705CB6 /* WDATableViewController.m in Sources */,

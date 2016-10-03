@@ -32,7 +32,14 @@
     [super viewDidLoad];
     [self getLocation];
     [self getCurrentConditions];
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"WeatherApp-background-1.jpg"]];
+    
+    
+    //Set up the image to alternate with the weather, add new methods for setting this up.
+    //self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"WeatherApp-background-1.jpg"]];
+    
+    self.tableView.backgroundColor = [UIColor darkGrayColor];
+    
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                   forBarMetrics:UIBarMetricsDefault];
